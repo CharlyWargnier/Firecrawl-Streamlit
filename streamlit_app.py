@@ -60,31 +60,27 @@ if page == "🔍 Basic Search":
                 st.code(str(e))
 
 # === 🔬 Advanced Search ===
+
 elif page == "🔬 Advanced Search":
     st.header("🔬 Advanced Search Options")
-    query = st.text_input("Query", "", key="adv_query")
-    limit = st.slider("Number of results", 1, 10, 3, key="adv_limit")
-    lang = st.selectbox("Language", ["", "en", "fr", "de"])
-    country = st.selectbox("Country", ["", "us", "fr", "de"])
-    tbs = st.selectbox("Time filter", ["", "qdr:h", "qdr:d", "qdr:w", "qdr:m", "qdr:y"])
-    timeout = st.slider("Timeout (sec)", 5, 60, 30)
-    formats = st.multiselect("Formats", ["markdown", "html", "links", "screenshot"], default=["markdown", "links"])
 
-    if not api_provided:
-        st.info("🔒 Please enter your Firecrawl API key to run the advanced search.")
-        st.button("Run Advanced Search", disabled=True)
-    elif st.button("Run Advanced Search"):
+    query = st.text_input("Query", "latest web scraping techniques", key="adv_query")
+    limit = st.slider("Number of results", 1, 10, 3, key="adv_limit")
+    lang = st.selectbox("Language", ["", "en", "fr", "de"], index=0)
+    country = st.selectbox("Country", ["", "us", "fr", "de"], index=0)
+    tbs = st.selectbox("Time filter", ["", "qdr:h", "qdr:d", "qdr:w", "qdr:m", "qdr:y"], index=0)
+    timeout = st.slider("Timeout (sec)", 5, 60, 30)
+
+    if st.button("Run Advanced Search"):
         with st.spinner("Running advanced search..."):
             try:
-                scrape_opts = ScrapeOptions(formats=formats) if formats else None
                 result = app.search(
                     query=query,
                     limit=limit,
                     lang=lang or None,
                     country=country or None,
                     tbs=tbs or None,
-                    timeout=timeout * 1000,
-                    scrape_options=scrape_opts
+                    timeout=timeout * 1000
                 )
                 if not result.data:
                     st.warning("No data.")
@@ -105,7 +101,7 @@ elif page == "🧲 Search + Scrape":
     formats = st.multiselect("Scrape formats", ["markdown", "html", "links"], default=["markdown", "links"])
 
     if not api_provided:
-        st.info("🔒 Please enter your Firecrawl API key to run the scrape.")
+        st.warning("⚠️ Enter your Firecrawl API key to run the search.")
         st.button("Run Search + Scrape", disabled=True)
     elif st.button("Run Search + Scrape"):
         with st.spinner("Running search and scraping..."):
