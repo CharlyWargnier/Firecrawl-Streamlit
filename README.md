@@ -2,6 +2,8 @@
 
 [![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://firecrawl.streamlit.app/)
 
+![App Demo](demo.jpg)
+
 Built by [Charly Wargnier](https://x.com/DataChaz), this Streamlit demo highlights Firecrawl's ace new Search API!
 
 👉 [Docs](https://docs.firecrawl.dev/features/search) • [API Reference](https://docs.firecrawl.dev/api-reference/endpoint/search)
